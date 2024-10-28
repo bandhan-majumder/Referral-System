@@ -10,12 +10,12 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = ""
 }
 
 
 model Users {
-  id            Int   @id @default(autoincrement())
+  id            String   @id @default(uuid())
   username      String      @unique
   password      String
   referralCode  String      @unique @db.Char(6)
@@ -26,9 +26,9 @@ model Users {
 }
 
 model Referrals {
-  id        Int   @id @default(autoincrement())
+  id        String  @id @default(uuid())
   referralCode String
-  referredUserId Int @unique
+  referredUserId String @unique
   
   referredBy   Users    @relation("ReferredBy", fields: [referralCode], references: [referralCode])
   user         Users    @relation("ReferredUser", fields: [referredUserId], references: [id])
