@@ -46,7 +46,8 @@ export async function signUpUsers(
         } catch (error) {
           console.log(error);
           response.json({
-            msg: "Invalid REFERRAL code",
+            success: false,
+            message: "Invalid REFERRAL code",
           });
         }
       }
@@ -74,7 +75,7 @@ export async function signUpUsers(
           },
         });
       }
-      response.status(200).send(respDB);
+      response.status(200).send({...respDB, success: true});
     } catch (error) {
       response.status(400).send({
         success: false,
