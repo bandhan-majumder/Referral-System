@@ -9,6 +9,6 @@ const userRouter = Router();
 userRouter.post('/signup', signUpUsers)
 userRouter.post('/signin', signInUsers)
 userRouter.post('/showDetails',showDetailsMiddleware, showDetails)
-userRouter.get('/show-top-referral-counts', showTopReferralCounts)
+userRouter.get('/leaderboard', showTopReferralCounts)
 
 export default userRouter;

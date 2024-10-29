@@ -41,7 +41,7 @@ function Signin() {
         console.log(response);
         if (response.data.username) {
           alert(`Welcome back ${response.data.username}`);
-          navigate("/dashboard");
+          navigate("/user/details");
         } else {
           setErrorMsg(response.data.message);
         }

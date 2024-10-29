@@ -5,6 +5,8 @@ import Hero from "./components/Hero";
 import NavBar from "./components/NavBar";
 import Signup from "./components/Signup";
 import Signin from "./components/Signin";
+import UserDetails from "./components/UserDetails";
+import LeaderBoard from "./components/LeaderBoard";
 
 export default function App() {
   return (
@@ -15,7 +17,9 @@ export default function App() {
           <Route path="/" element={<Hero />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
-        </Routes>
+          <Route path="/user/details" element={<UserDetails />}/>
+          <Route path="/leaderboard" element={<LeaderBoard />} />
+          </Routes>
         <Footer />
       </div>
     </BrowserRouter>

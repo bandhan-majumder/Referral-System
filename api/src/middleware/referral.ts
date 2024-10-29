@@ -16,6 +16,7 @@ export async function showDetailsMiddleware(
   ){
     const token:string = request.cookies.access_token;
     if(!token){
+
         response.status(400).json({
             "success": false,
             "message": "You are not logged in"

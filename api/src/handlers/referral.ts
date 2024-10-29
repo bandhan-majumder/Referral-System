@@ -1,6 +1,5 @@
 import { NextFunction, Request, response, Response }from "express";
 import { PrismaClient } from "@prisma/client";
-const SECRET: string = "";
 import { middlewareInterfaceRequest } from "../dtos/ReferralMiddleware";
 
 export async function showDetails(
@@ -19,8 +18,12 @@ export async function showDetails(
                 referralCount: true
             }
         })
+        console.log(response)
         response.status(200).json({
-            "msg": `${referralCode} has ${userInfo?.referralCount} counts`
+            "success": true,
+            "referralCode": `${referralCode}`,
+            "referralCount": `${userInfo?.referralCount}`,
+            "message": `Your CODE ${referralCode} has ${userInfo?.referralCount} counts`
         })
     } catch(error){
         response.status(500).json({
@@ -35,6 +38,7 @@ export async function showTopReferralCounts(
     request: Request,
     response: Response,
     next: NextFunction) {
+  console.log("coming here.......")
   const client = new PrismaClient();
   const topReferrers = await client.users.findMany({
     orderBy: {
