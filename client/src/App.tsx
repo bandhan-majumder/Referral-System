@@ -1,15 +1,21 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import NavBar from "./components/NavBar";
-import { BrowserRouter } from "react-router-dom";
-import "./App.css";
+import Signup from "./components/Signup";
+import Signin from "./components/Signin";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="bg-gradient-to-l from-green-700 to-transparent h-[100vh]" style={{boxSizing: "border-box"}}>
+      <div className="bg-gradient-to-l from-green-700 to-100% to-transparent h-[100vh]">
         <NavBar />
-        <Hero />
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+        </Routes>
         <Footer />
       </div>
     </BrowserRouter>
