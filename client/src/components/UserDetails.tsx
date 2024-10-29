@@ -51,7 +51,7 @@ function UserDetails() {
             </span>{" "}
             people
           </h1>
-          <h1 className="py-10">Check top 5 referral codes at <Link to="/leaderboard" className="underline underline-offset-2 cursor-pointer hover:text-white">
+          <h1 className="py-6 md:py-20 md:mb-80 mb-40">Check top 5 referral codes at <Link to="/leaderboard" className="underline underline-offset-2 cursor-pointer hover:text-[#3c492b]">
         leaderboard</Link></h1>
           </div>
         </div>

@@ -62,12 +62,12 @@ function Signup() {
   }
 
   return (
-    <div className="max-w-xl h-auto mx-auto py-8 flex flex-col justify-center items-center my-20 gap-10 outline rounded-3xl">
-      <h1 className="text-4xl underline underline-offset-4">
+    <div className="max-w-xl mx-auto flex flex-col justify-center items-center my-20">
+      <h1 className="text-4xl underline underline-offset-4 font-semibold py-10">
         Create an account
       </h1>
-      <div>
-        <h2 className="text-2xl py-4">Enter your username</h2>
+      <div className="flex flex-col gap-0">
+        <h2 className="text-2xl py-2">Enter your username</h2>
         <input
           id="username"
           onChange={handleChange}
@@ -75,19 +75,18 @@ function Signup() {
           minLength={5}
           maxLength={10}
           placeholder=" r a n d o m 1 (within 5 to 10 char)"
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-slate-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50
+          className="flex h-9 w-full rounded-md border border-black bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-slate-800 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50
           "
         />
-        <h2 className="text-2xl py-4">Enter your password</h2>
+        <h2 className="text-2xl py-2">Enter your password</h2>
         <input
           id="password"
           onChange={handleChange}
           type="password"
           placeholder=" * * * * * * * "
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-slate-600
-        focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex h-9 w-full rounded-md border border-black bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-slate-800 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
         />
-        <h2 className="text-2xl py-4"> REFERRAL code</h2>
+        <h2 className="text-2xl py-2"> REFERRAL code</h2>
         <input
           id="referralCode"
           onChange={handleChange}
@@ -95,30 +94,29 @@ function Signup() {
           maxLength={6}
           type="text"
           placeholder=" Z P Q L 0 0"
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-slate-600
-          focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 uppercase"
+          className="flex h-9 w-full rounded-md border border-black bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-slate-800 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
         />
         <p className="pt-5 text-lg">
           already have an account?{" "}
-          <span className="underline underline-offset-2 text-green-900 hover:text-white cursor-pointer">
+          <span className="underline underline-offset-2 text-green-900 font-semibold hover:text-[#95af6c] cursor-pointer">
             <Link to="/signin">sign in</Link>
           </span>
         </p>
+      </div>
         {errorMsg ? (
-          <p className="py-3 text-red-600 text-start">Error: {errorMsg}</p>
+          <p className="font-semibold py-2 text-red-700"><span className="text-start">Error:</span> {errorMsg}</p>
         ): (
-            <p className="py-3 text-slate-400 text-start">Tip: Follow the rules written in placeholders</p>
+            <p className="py-2 text-slate-800 text-start"><span className="font-semibold">Tip:</span> Follow the rules written in placeholders</p>
         )}
         <div className="flex justify-center items-center">
           <button
-            className="bg-gradient-to-b from-black to-70% to-green-400 w-40 h-10 rounded-3xl text-lg hover:text-white"
+            className="bg-gradient-to-b from-[#344027] to-70% to-[#5c753b] text-white w-40 h-10 rounded-3xl text-lg hover:text-white"
             onClick={handleSubmit}
           >
             sign up
           </button>
         </div>
       </div>
-    </div>
   );
 }
 

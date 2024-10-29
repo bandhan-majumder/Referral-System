@@ -11,7 +11,8 @@ import LeaderBoard from "./components/LeaderBoard";
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="bg-gradient-to-l from-green-700 to-100% to-transparent h-[100vh]">
+      <div className="bg-gradient-to-r
+       from-[#5c753b] via-[#d0ddb9] to-[#e7edda] h-full">
         <NavBar />
         <Routes>
           <Route path="/" element={<Hero />} />
