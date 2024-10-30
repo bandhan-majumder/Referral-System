@@ -18,16 +18,27 @@ mv .env.example .env
 ## DB Setup (Postgres by default)
 Connect your database URL in the `.env` file present in `api/`
 
-### DB setup with Docker
+### local dB setup with Docker
 ```
 docker run --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
 ```
 if you are using exactly same config, you don't need to change anything in .env file. Else you have to modify the password and names
 
+### Global options
+Go to any of the site and get your DB URL and paste in the env
+
+1. Neon DB : [visit](neon.tech)
+2. Aiven: [visit](https://aiven.io/)
+
+make sure to run 
+```
+npx prisma migrate dev --name Initialize the schema
+npx prisma generate
+```
+
 ## Run the backend
 Go to  `api` folder and run
 ```
-npx prisma generate
 tsc -b
 node dist/index.js
 ```
@@ -45,6 +56,14 @@ JWT tokens are exposed in the code which should be avoided. Try to add them in .
 ## Run
 Go to the browser and run `localhost:5173`
 
+
+## Make changes
+Everytime you change anything in backend,make sure to run
+```
+npx prisma generate
+tsc -b
+node dist/index.js
+```
 ## Backend issue
 Make sure your db is connected. If you are using docker, make sure the container is running. Check with
 ```
