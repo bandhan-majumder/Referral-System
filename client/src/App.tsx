@@ -8,6 +8,7 @@ import Signin from "./components/Signin";
 import UserDetails from "./components/UserDetails";
 import LeaderBoard from "./components/LeaderBoard";
 import { RecoilRoot } from "recoil";
+import Custom404 from "./components/Custom404";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/signin" element={<Signin />} />
             <Route path="/user/details" element={<UserDetails />} />
             <Route path="/leaderboard" element={<LeaderBoard />} />
+            <Route path="*" element={<Custom404 />} />
           </Routes>
           <Footer />
         </div>

@@ -28,7 +28,13 @@ function NavBar() {
           refi
         </h1>
       </Link>
-      <div className="flex gap-10">
+      <div className="flex gap-6">
+        <Link
+          to="/"
+          className="flex text-center items-center justify-center text-lg hover:underline decoration-2"
+        >
+          Home
+        </Link>
         <Link
           to="/leaderboard"
           className="flex text-center items-center justify-center text-lg hover:underline decoration-2"
