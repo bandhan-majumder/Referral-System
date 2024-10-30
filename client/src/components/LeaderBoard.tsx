@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import DatabaseFailure from "./DatabaseFailure";
 
 interface Referrers {
   referralCode: string;
@@ -9,23 +10,28 @@ interface Referrers {
 
 function LeaderBoard() {
   const [topUsers, setTopUsers] = useState<Referrers[]>([]);
+  const [dbFailureMsg, setDbFailureMsg]=useState("")
 
   useEffect(() => {
     fetchDetails();
   }, []);
 
   async function fetchDetails() {
-    const response = await axios.get("/api/users/leaderboard");
-    setTopUsers(response.data.topReferrers);
+    try {const response = await axios.get("/api/users/leaderboard");
+    setTopUsers(response.data.topReferrers);}
+    catch(error){
+      setDbFailureMsg("Failed to connect with database")
+      console.log(error)
+    }
   }
   return (
     <div className="max-w-7xl mx-auto py-10">
       <h1 className="text-center text-4xl font-bold underline underline-offset-4">
         Leaderboard
       </h1>
-      <h1 className="text-3xl text-center py-10">Congrats! for winning <span className="font-semibold cursor-pointer">exclusive swags</span> 🎁🎉</h1>
+      {!dbFailureMsg && <h1 className="text-3xl text-center py-10">Congrats! for winning <span className="font-semibold cursor-pointer">exclusive swags</span> 🎁🎉</h1>}
       {topUsers.length == 0 && (
-        <div className="text-center font-bold text-4xl">Loading...</div>
+        <div className="text-center font-bold text-4xl">{dbFailureMsg ? <DatabaseFailure /> : "loading.."}</div>
       )}
       {topUsers ? (
         <div className="flex flex-col items-center justify-center gap-5">
@@ -50,7 +56,7 @@ function LeaderBoard() {
           ))}
         </div>
       ) : (
-        <div className="text-center font-bold text-4xl">Loading...</div>
+        <div className="text-center font-bold text-4xl">"loading..."</div>
       )}
     </div>
   );

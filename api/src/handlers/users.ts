@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 import { middlewareInterfaceRequest } from "../dtos/ReferralMiddleware";
 import { z } from "zod";
 
-const SECRET: string = "";
+const SECRET: string = "12414214";
 
 export async function signUpUsers(
   request: Request<{}, {}, CreateUserDto>,
