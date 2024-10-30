@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { middlewareInterfaceRequest } from "../dtos/ReferralMiddleware";
-const SECRET: string = "12414214";
 import jwt from "jsonwebtoken";
+
+// take this from .env
+const SECRET: string = "";
 
 interface MyJwtPayload {
     username: string,
