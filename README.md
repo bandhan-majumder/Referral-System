@@ -9,7 +9,9 @@ npm i
 cd .. && cd client
 npm i
 ```
-## Change file
+## Change .env.example to .env
+go to `api/` and run the following command
+
 ```
 mv .env.example .env
 ```
@@ -43,3 +45,16 @@ JWT tokens are exposed in the code which should be avoided. Try to add them in .
 ## Run
 Go to the browser and run `localhost:5173`
 
+## Backend issue
+Make sure your db is connected. If you are using docker, make sure the container is running. Check with
+```
+docker ps
+```
+if it has been stopped, grab the id with
+```
+docker ps -a
+```
+and run
+```
+docker start <_id_>
+```
