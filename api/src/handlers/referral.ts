@@ -15,12 +15,13 @@ export async function showDetails(
             where:{referralCode: referralCode},
             select:{
                 id: true,
+                username: true,
                 referralCount: true
             }
         })
-        console.log(response)
         response.status(200).json({
             "success": true,
+            "username": `${userInfo?.username}`,
             "referralCode": `${referralCode}`,
             "referralCount": `${userInfo?.referralCount}`,
             "message": `Your CODE ${referralCode} has ${userInfo?.referralCount} counts`
@@ -38,7 +39,6 @@ export async function showTopReferralCounts(
     request: Request,
     response: Response,
     next: NextFunction) {
-  console.log("coming here.......")
   const client = new PrismaClient();
   const topReferrers = await client.users.findMany({
     orderBy: {
@@ -51,8 +51,6 @@ export async function showTopReferralCounts(
       referralCount: true
     }
   });
-  console.log("reaching here")
-  console.log(topReferrers)
   response.status(200).json({
     topReferrers
   })

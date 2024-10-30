@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import { generateRandomReferrals } from "../generateReferrals";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { middlewareInterfaceRequest } from "../dtos/ReferralMiddleware";
 
 const SECRET: string = "";
 
@@ -19,68 +20,95 @@ export async function signUpUsers(
       success: false,
       message: "username must be within 5 to 10 characters",
     });
+    return
   } else {
-    // hash the password with salting
-    const hashedPassword = await bcrypt.hash(password, 3);
-
-    // generate random unique referralcode
-    const userReferralCode = generateRandomReferrals(username);
-
     // connect the prisma client
     const client = new PrismaClient();
 
     try {
-      // if the user has given a VALIDE referral code, only then increase the referralCount of the refferer by 1
+      // check if the referral code is valid or not
       if (referralCode) {
-        try {
-          await client.users.update({
-            data: {
-              referralCount: {
-                increment: 1, // increase the count by 1
-              },
-            },
-            where: {
-              referralCode: referralCode,
-            },
-          });
-        } catch (error) {
-          console.log(error);
-          response.json({
+        const referralCodeExists = await client.users.findFirst({
+          where: {
+            referralCode: referralCode,
+          },
+          select: {
+            id: true,
+            username: true,
+          },
+        });
+        if(!referralCodeExists){
+          response.status(404).json({
             success: false,
-            message: "Invalid REFERRAL code",
-          });
+            message: "Invalid REFERRAL code"
+          })
+          return
         }
       }
 
-      // create new user
-      const respDB = await client.users.create({
-        data: {
-          username,
-          password: hashedPassword,
-          referralCode: userReferralCode,
+      // check if the given username already exists or not
+      const userExists = await client.users.findFirst({
+        where: {
+          username: username,
         },
         select: {
-          id: true,
           username: true,
-          referralCode: true
+          referralCode: true,
         },
       });
 
-      // if referralCode is valid and avl, update the referral table
-      if (referralCode) {
-        await client.referrals.create({
+      if(userExists){
+          response.status(400).json({
+            success: false,
+            message: "Username already exists!"
+        })
+        return
+      } else { // if there is not previous user with the username
+        // hash the password with salting
+        const hashedPassword = await bcrypt.hash(password, 3);
+
+        // generate random unique referralcode
+        const userReferralCode = generateRandomReferrals(username);
+        const respDB = await client.users.create({
           data: {
-            referralCode: referralCode,
-            referredUserId: respDB.id,
+            username,
+            password: hashedPassword,
+            referralCode: userReferralCode,
+          },
+          select: {
+            id: true,
+            username: true,
+            referralCode: true,
           },
         });
-      }
-      response.status(200).send({...respDB, success: true});
+
+        // update referral db is the user has send referral code
+        if (referralCode) {
+          await client.referrals.create({
+            data: {
+              referralCode: referralCode,
+              referredUserId: respDB.id,
+            },
+          });
+
+          // update referral count by 1 of the code the new user used
+          await client.users.update({
+            where: {referralCode: referralCode},
+            data: {
+              referralCount : {
+                increment: 1
+              }
+            }
+          })
+        }
+        response.status(200).send({ ...respDB, success: true });
+      } 
     } catch (error) {
       response.status(400).send({
         success: false,
-        message: "Username already exists!",
+        message: "Server side problem occured.",
       });
+      return
     }
   }
 }
@@ -134,5 +162,24 @@ export async function signInUsers(
         })
         .json(rest);
     }
+  }
+}
+
+export async function logOutHelper(
+  request: Request<{}, {}, middlewareInterfaceRequest>,
+  response: Response,
+  next: NextFunction
+) {
+  const { username, referralCode } = request.body;
+
+  // if user is not logged in, ask them to login first
+  if (!username || !referralCode) {
+    response.status(403).json({
+      success: false,
+      message: "Log in first",
+    });
+  } else {
+    response.clearCookie("access_token");
+    response.status(200).json({ success: true, message: "Cookie deleted" });
   }
 }

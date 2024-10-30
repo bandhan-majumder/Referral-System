@@ -16,7 +16,6 @@ function LeaderBoard() {
 
   async function fetchDetails() {
     const response = await axios.get("/api/users/leaderboard");
-    console.log(response);
     setTopUsers(response.data.topReferrers);
   }
   return (

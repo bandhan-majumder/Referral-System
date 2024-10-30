@@ -7,22 +7,27 @@ import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import UserDetails from "./components/UserDetails";
 import LeaderBoard from "./components/LeaderBoard";
+import { RecoilRoot } from "recoil";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="bg-gradient-to-r
-       from-[#5c753b] via-[#d0ddb9] to-[#e7edda] h-full">
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/user/details" element={<UserDetails />}/>
-          <Route path="/leaderboard" element={<LeaderBoard />} />
+      <RecoilRoot>
+        <div
+          className="bg-gradient-to-r
+       from-[#5c753b] via-[#d0ddb9] to-[#e7edda] h-full"
+        >
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Hero />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/user/details" element={<UserDetails />} />
+            <Route path="/leaderboard" element={<LeaderBoard />} />
           </Routes>
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </RecoilRoot>
     </BrowserRouter>
   );
 }

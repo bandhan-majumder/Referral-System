@@ -1,7 +1,10 @@
+import { ProfileAtom } from "@/store/atoms/ProfileAtom";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
 function Hero() {
+  const isLoggedIn = useRecoilValue(ProfileAtom);
   return (
     <>
       <div className="max-w-7xl text-center mx-auto py-6 tracking-wide">
@@ -19,7 +22,9 @@ function Hero() {
           className="rounded-3xl md:max-h-[50vh] shadow-2xl max-h-[40vh]"
         />
         <div className="md:max-w-[40vw] lg:max-w[30vw]">
-          <h1 className="text-5xl font-extrabold px-4 font-serif">Welcome to <span className="text-6xl text-[#24390c]">refi</span>!</h1>
+          <h1 className="text-5xl font-extrabold px-4 font-serif">
+            Welcome to <span className="text-6xl text-[#24390c]">refi</span>!
+          </h1>
           <p className="py-7 px-4">
             Join our growing community where connections create opportunities.
             When you refer a friend, you're not just sharing a platform - you're
@@ -28,23 +33,46 @@ function Hero() {
             create a more connected world. Together, we grow better.
           </p>
           <div className="flex flex-row">
-            <Link to="/signup">
-              <button className="transition-all duration-300 rounded-lg text-lg bg-[#24390c] 
+            {isLoggedIn ? (
+              <Link to="/user/details">
+                <button
+                  className="transition-all duration-300 rounded-lg text-lg bg-[#24390c] 
+                text-white
+                font-medium py-2 tracking-tighter px-4 mx-4 hover:bg-[#5c753b]"
+                >
+                  Dashboard
+                </button>
+              </Link>
+            ) : (
+              <Link to="/signup">
+                <button
+                  className="transition-all duration-300 rounded-lg text-lg bg-[#24390c] 
               text-white
-              font-medium py-2 tracking-tighter px-4 mx-4 hover:bg-[#5c753b]">
-                SIGN UP NOW
-              </button>
-            </Link>
-            <Link to="/signin">
-              <button className="transition-all duration-300 rounded-lg text-lg
-              font-medium py-2 tracking-tighter px-3 mx-4 hover:bg-[#5c753b] hover:text-white outline">
-                SIGN IN
-              </button>
-            </Link>
-            <Link to="/signup" className="py-1 hover:translate-x-2 cursor-pointer">
-            <HiOutlineArrowNarrowRight className="text-4xl"/>
-            </Link>
-            
+              font-medium py-2 tracking-tighter px-4 mx-4 hover:bg-[#5c753b]"
+                >
+                  SIGN UP NOW
+                </button>
+              </Link>
+            )}
+
+            {!isLoggedIn && (
+              <div className="flex flex-row">
+                <Link to="/signin">
+                  <button
+                    className="transition-all duration-300 rounded-lg text-lg
+              font-medium py-2 tracking-tighter px-3 mx-4 hover:bg-[#5c753b] hover:text-white outline"
+                  >
+                    SIGN IN
+                  </button>
+                </Link>
+                <Link
+                  to="/signup"
+                  className="py-1 hover:translate-x-2 cursor-pointer"
+                >
+                  <HiOutlineArrowNarrowRight className="text-4xl" />
+                </Link>
+              </div>
+            )}
           </div>
         </div>
         <div></div>
@@ -52,7 +80,7 @@ function Hero() {
       <p className="text-center">
         Check top referrers{" "}
         <Link to="/leaderboard">
-        <span className="text-green-900 underline">here</span>
+          <span className="text-green-900 underline">here</span>
         </Link>
       </p>
     </>
