@@ -51,7 +51,7 @@ npm run dev
 ```
 
 ## JWT Secret Setup
-JWT tokens are exposed in the code which should be avoided. Try to add them in .env and import from there.
+JWT tokens are exposed in the code which should be avoided. Try to add them in .env and import from there. Tokens are `SECRET` in this proj.
 
 ## Run
 Go to the browser and run `localhost:5173`
