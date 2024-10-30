@@ -34,7 +34,7 @@ function Signup() {
       setErrorMsg("username and password can't be empty");
     } else {
         if (formData.username.length < 5 || formData.username.length > 10) {
-            setErrorMsg("Username must be within 5-10 characters");
+            setErrorMsg("Username must be within 5 to 10 characters");
         } else {
             try {
                 const response: ServerResponse = await axios.post(
@@ -49,7 +49,6 @@ function Signup() {
                 }
               } catch (error) {
                 if (axios.isAxiosError(error)) {
-                  console.log(error.response);
                   setErrorMsg(
                     error.response?.data?.message || "An error occurred during signup"
                   );
@@ -73,7 +72,7 @@ function Signup() {
           type="text"
           minLength={5}
           maxLength={10}
-          placeholder=" r a n d o m 1 (within 5 to 10 char)"
+          placeholder="enter 5 to 10 char username"
           className="flex h-9 w-full rounded-md border border-black bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-slate-800 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 lowercase
           "
         />
@@ -92,7 +91,7 @@ function Signup() {
           minLength={6}
           maxLength={6}
           type="text"
-          placeholder=" Z P Q L 0 0"
+          placeholder="Enter 6 digit code"
           className="flex h-9 w-full rounded-md border border-black bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-slate-800 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 uppercase"
         />
         <p className="pt-5 text-lg">

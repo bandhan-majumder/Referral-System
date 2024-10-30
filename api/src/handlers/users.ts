@@ -5,6 +5,7 @@ import { generateRandomReferrals } from "../generateReferrals";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { middlewareInterfaceRequest } from "../dtos/ReferralMiddleware";
+import { z } from "zod";
 
 const SECRET: string = "";
 
@@ -14,13 +15,36 @@ export async function signUpUsers(
   next: NextFunction
 ) {
   const { username, password, referralCode } = request.body;
-  // username must be of between length 5 to 10
-  if (username.length < 5 || username.length > 10) {
-    response.status(400).json({
+
+  // expected schema of password and username
+
+  const rightSchema = z.object({
+    username: z
+      .string()
+      .min(5, "username must be between 5 to 10 characters")
+      .max(10, "username must be between 5 to 10 characters"),
+    password: z
+      .string()
+      .min(8, "username must be at least 8 characters long")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase character")
+      .regex(/[a-z]/, "Password must contain atleast one lowercase character")
+      .regex(/[0-9]/, "Password must contan atleast one number")
+      .regex(
+        /[^A-Za-z0-9]/,
+        "Password must contain at least one special character"
+      ),
+    referralCode: z.string().optional(),
+  });
+
+  const safeParsed = await rightSchema.safeParse(request.body);
+
+  if (!safeParsed.success) {
+    response.status(403).json({
       success: false,
-      message: "username must be within 5 to 10 characters",
+      message:
+        "Invalid format. Username (5-8 chars) and password (8 chars: 1 upper, 1 lower, 1 number, 1 special)",
     });
-    return
+    return;
   } else {
     // connect the prisma client
     const client = new PrismaClient();
@@ -28,20 +52,29 @@ export async function signUpUsers(
     try {
       // check if the referral code is valid or not
       if (referralCode) {
-        const referralCodeExists = await client.users.findFirst({
-          where: {
-            referralCode: referralCode,
-          },
-          select: {
-            id: true,
-            username: true,
-          },
-        });
-        if(!referralCodeExists){
-          response.status(404).json({
+        // check if the code is of 6 digits or not to reduce db calls
+        if (referralCode.length === 6) {
+          const referralCodeExists = await client.users.findFirst({
+            where: {
+              referralCode: referralCode,
+            },
+            select: {
+              id: true,
+              username: true,
+            },
+          });
+          if (!referralCodeExists) {
+            response.status(404).json({
+              success: false,
+              message: "Invalid REFERRAL code",
+            });
+            return;
+          }
+        } else {
+          response.status(403).json({
             success: false,
-            message: "Invalid REFERRAL code"
-          })
+            message: "REFERRAL code must be of 6 digits",
+          });
           return
         }
       }
@@ -57,13 +90,14 @@ export async function signUpUsers(
         },
       });
 
-      if(userExists){
-          response.status(400).json({
-            success: false,
-            message: "Username already exists!"
-        })
-        return
-      } else { // if there is not previous user with the username
+      if (userExists) {
+        response.status(400).json({
+          success: false,
+          message: "Username already exists!",
+        });
+        return;
+      } else {
+        // if there is not previous user with the username
         // hash the password with salting
         const hashedPassword = await bcrypt.hash(password, 3);
 
@@ -93,22 +127,22 @@ export async function signUpUsers(
 
           // update referral count by 1 of the code the new user used
           await client.users.update({
-            where: {referralCode: referralCode},
+            where: { referralCode: referralCode },
             data: {
-              referralCount : {
-                increment: 1
-              }
-            }
-          })
+              referralCount: {
+                increment: 1,
+              },
+            },
+          });
         }
         response.status(200).send({ ...respDB, success: true });
-      } 
+      }
     } catch (error) {
       response.status(400).send({
         success: false,
         message: "Server side problem occured.",
       });
-      return
+      return;
     }
   }
 }

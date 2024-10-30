@@ -89,6 +89,8 @@ function Signin() {
               <Link to="/signup">sign up</Link>
             </span>
           </p>
+        </div>
+        <div>
           {errorMsg ? (
             <p className="font-semibold py-2 text-red-700 text-start">
               <span>Error:</span> {errorMsg}
