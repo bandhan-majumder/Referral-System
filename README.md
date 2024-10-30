@@ -25,6 +25,7 @@ if you are using exactly same config, you don't need to change anything in .env 
 ## Run the backend
 Go to  `api` folder and run
 ```
+npx prisma generate
 tsc -b
 node dist/index.js
 ```
