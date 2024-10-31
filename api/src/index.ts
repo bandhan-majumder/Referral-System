@@ -1,8 +1,7 @@
-import express, { NextFunction, Request, response, Response } from "express";
+import express from "express";
 import userRouter from "./routes/users";
 import cookieParser from "cookie-parser"
 import path from "path";
-import { request } from "http";
 
 const __dirname: string = path.resolve();
 const app = express();
@@ -24,3 +23,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
+
+export default app;
