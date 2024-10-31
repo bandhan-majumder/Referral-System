@@ -18,7 +18,7 @@ app.get('*', (request, response)=>{
   response.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
 })
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 
 app.listen(PORT, () => {
