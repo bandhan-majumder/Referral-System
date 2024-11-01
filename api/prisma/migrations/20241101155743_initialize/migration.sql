@@ -13,7 +13,7 @@ CREATE TABLE "Users" (
 CREATE TABLE "Referrals" (
     "id" TEXT NOT NULL,
     "referralCode" TEXT NOT NULL,
-    "referredUser" TEXT NOT NULL,
+    "referredUserId" TEXT NOT NULL,
 
     CONSTRAINT "Referrals_pkey" PRIMARY KEY ("id")
 );
@@ -24,8 +24,11 @@ CREATE UNIQUE INDEX "Users_username_key" ON "Users"("username");
 -- CreateIndex
 CREATE UNIQUE INDEX "Users_referralCode_key" ON "Users"("referralCode");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Referrals_referredUserId_key" ON "Referrals"("referredUserId");
+
 -- AddForeignKey
 ALTER TABLE "Referrals" ADD CONSTRAINT "Referrals_referralCode_fkey" FOREIGN KEY ("referralCode") REFERENCES "Users"("referralCode") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Referrals" ADD CONSTRAINT "Referrals_referredUser_fkey" FOREIGN KEY ("referredUser") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Referrals" ADD CONSTRAINT "Referrals_referredUserId_fkey" FOREIGN KEY ("referredUserId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
