@@ -8,7 +8,8 @@ export default defineConfig({
     host: '0.0.0.0',
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://referral-system-hers.onrender.com',
+        changeOrigin: true,
         secure: false,
       },
     },
