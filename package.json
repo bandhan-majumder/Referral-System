@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./api/dist/index.js",
+    "start": "cd ./api && npx prisma generate && ls && node ./dist/index.js",
     "build": "npm install && npm run build:api",
     "build:api": "npm install --prefix api && npx tsc --project api/tsconfig.json"
   },
