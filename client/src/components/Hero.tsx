@@ -1,4 +1,4 @@
-import { ProfileAtom } from "@/store/atoms/ProfileAtom";
+import { ProfileAtom } from "../store/atoms/ProfileAtom";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useState } from "react";
 import axios from "axios";
-import { ProfileAtom } from "@/store/atoms/ProfileAtom";
+import { ProfileAtom } from "../store/atoms/ProfileAtom";
 
 function NavBar() {
   const loggedIn = useRecoilValue(ProfileAtom);

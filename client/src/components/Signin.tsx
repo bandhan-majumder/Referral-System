@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { ProfileAtom } from "@/store/atoms/ProfileAtom";
+import { ProfileAtom } from "../store/atoms/ProfileAtom";
 
 interface ServerResponse {
   data: ServerData;

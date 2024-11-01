@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { ProfileAtom } from "@/store/atoms/ProfileAtom";
+import { ProfileAtom } from "../store/atoms/ProfileAtom";
 
 
 interface responseType {
