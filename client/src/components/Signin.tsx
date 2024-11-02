@@ -52,7 +52,7 @@ function Signin() {
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setErrorMsg(
-            error.response?.data?.message || "An error occurred during signup"
+            error.response?.data?.message || "An error occurred during signin"
           );
         }
       }
