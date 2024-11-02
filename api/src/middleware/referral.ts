@@ -3,7 +3,7 @@ import { middlewareInterfaceRequest } from "../dtos/ReferralMiddleware";
 import jwt from "jsonwebtoken";
 
 // take this from .env
-const SECRET: string = "";
+const SECRET: string = "SUPER_SECRET_HARDCODED";
 
 interface MyJwtPayload {
     username: string,
