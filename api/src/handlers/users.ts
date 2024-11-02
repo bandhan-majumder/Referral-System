@@ -8,7 +8,7 @@ import { middlewareInterfaceRequest } from "../dtos/ReferralMiddleware";
 import { z } from "zod";
 
 // add this in .env
-const SECRET: string = "";
+const SECRET: string = "SUPER_SECRET_HARDCODED";
 
 export async function signUpUsers(
   request: Request<{}, {}, CreateUserDto>,
