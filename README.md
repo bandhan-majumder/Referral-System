@@ -44,6 +44,11 @@ npx prisma migrate dev --name Initialize the schema
 npx prisma generate
 ```
 
+## Access DB via CLI
+```
+psql -h localhost -d postgres -U postgres
+```
+
 ## Run the backend
 Go to  `api` folder and run
 ```
