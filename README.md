@@ -3,7 +3,7 @@
 Check live at [here](https://referral-system-frontend.onrender.com/)
 
 ## Architecture
-![image](https://github.com/user-attachments/assets/a9efb60d-dd43-4ee0-9a35-b59bb2ad8e6b)
+![image](https://github.com/user-attachments/assets/374129a5-943f-4b42-ba0a-6ec89ac79412)
 
 
 ## Local Setup
